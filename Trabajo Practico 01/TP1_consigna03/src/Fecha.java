@@ -1,4 +1,10 @@
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.util.Calendar;
+import java.util.Date;
+import java.text.ParseException;
+
+
 
 public class Fecha {
     private int dia;
@@ -58,36 +64,48 @@ public class Fecha {
 
     @Override
     public String toString() {
-        return "Fecha{" +
-                "dia=" + dia +
-                ", mes=" + mes +
-                ", año=" + anho +
-                '}';
+        return dia + "/" + mes + "/" + anho;
     }
 
     public int comparar(Fecha f2){
-        int resp = 0;
         if (this.anho < f2.anho){
-            resp = -1;
+            return -1;
         }else if (this.anho > f2.anho){
-            resp = 1;
+            return 1;
         }else{
             if (this.mes < f2.mes){
-                resp = -1;
+                return -1;
             }else if (this.mes > f2.mes){
-                resp = 1;
+                return 1;
             }else{
                 if (this.dia < f2.dia){
-                    resp = -1;
+                    return -1;
                 }else if (this.dia > f2.dia){
-                    resp = 1;
+                    return 1;
                 }
             }
         }
-        return resp;
+        return 0;
     }
 
-    public Fecha add(int num){
-
+    public void desplazar(){
+        Scanner entradaScanner = new Scanner (System.in);
+        System.out.println("Ingrese Dias a desplazar:");
+        int dias = Integer.parseInt(entradaScanner.nextLine());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar cal = Calendar.getInstance();
+        try {
+            Date date = formatter.parse(this.toString());
+            cal.setTime(date);
+            cal.add(Calendar.DAY_OF_YEAR, dias);
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        int mes = cal.get(Calendar.MONTH) +  1;
+        System.out.println(cal.getTime());
+        System.out.println("Dia:" + cal.get(Calendar.DAY_OF_MONTH));
+        System.out.println("Mes:" + mes);
+        System.out.println("Año:" + cal.get(Calendar.YEAR));
     }
+
 }

@@ -101,7 +101,7 @@ public class Fecha {
         }catch (ParseException e){
             e.printStackTrace();
         }
-        int mes = cal.get(Calendar.MONTH) +  1;
+        int mes = cal.get(Calendar.MONTH) + 1;
         System.out.println(cal.getTime());
         System.out.println("Dia:" + cal.get(Calendar.DAY_OF_MONTH));
         System.out.println("Mes:" + mes);

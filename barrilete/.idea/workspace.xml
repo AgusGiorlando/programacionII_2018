@@ -1,32 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d4e6bd71-c139-4b82-ab6c-3a69e4db698d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/barrilete.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacion2_2018/barrilete/Alumno.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacion2_2018/barrilete/Animal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacion2_2018/barrilete/Arranque.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacion2_2018/barrilete/Marca.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacion2_2018/barrilete/Matematica.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacion2_2018/barrilete/Perro.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacion2_2018/barrilete/Persona.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacion2_2018/barrilete/Profesor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/ar/um/edu/programacion2_2018/test/MatematicaTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/ar/edu/um/programacion2_2018/barrilete/Alumno.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/ar/edu/um/programacion2_2018/barrilete/Arranque.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/ar/edu/um/programacion2_2018/barrilete/Matematica.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/ar/edu/um/programacion2_2018/barrilete/Persona.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/ar/edu/um/programacion2_2018/barrilete/Profesor.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/test-classes/ar/um/edu/programacion2_2018/test/MatematicaTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/src/Fecha.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/src/Fecha.java" afterDir="false" />
-    </list>
+    <list default="true" id="d4e6bd71-c139-4b82-ab6c-3a69e4db698d" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -123,8 +98,8 @@
       <file leaf-file-name="Arranque.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/um/programacion2_2018/barrilete/Arranque.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="406">
-              <caret line="41" selection-start-line="41" selection-end-line="41" />
+            <state relative-caret-position="229">
+              <caret line="28" column="27" lean-forward="true" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1203#1211#0" expanded="true" />
@@ -429,7 +404,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1522797575607</updated>
-      <workItem from="1522797582908" duration="10599000" />
+      <workItem from="1522797582908" duration="10697000" />
     </task>
     <servers />
   </component>
@@ -442,7 +417,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10599000" />
+    <option name="totallyTimeSpent" value="10697000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
@@ -457,7 +432,7 @@
       <window_info anchor="bottom" id="Event Log" side_tool="true" weight="0.32901135" />
       <window_info anchor="right" id="Maven Projects" weight="0.32980332" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.20907618" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.20907618" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info id="Capture Tool" />
@@ -607,8 +582,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/um/programacion2_2018/barrilete/Arranque.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="41" selection-start-line="41" selection-end-line="41" />
+        <state relative-caret-position="229">
+          <caret line="28" column="27" lean-forward="true" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1203#1211#0" expanded="true" />

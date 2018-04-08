@@ -31,8 +31,8 @@ public class Materia {
     }
 
     @Override
-    public static String toString() {
-        return "ar.um.edu.programacion_2018.TP2_consigna01.Materia{" +
+    public String toString() {
+        return "Materia{" +
                 "codigoMateria='" + codigoMateria + '\'' +
                 ", nombre='" + nombre + '\'' +
                 '}';

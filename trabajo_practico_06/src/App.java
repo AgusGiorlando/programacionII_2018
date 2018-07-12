@@ -1,5 +1,3 @@
-package ar.edu.um.programacion2_2018.TP6_Consigna01;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

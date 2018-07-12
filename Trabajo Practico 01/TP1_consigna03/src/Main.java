@@ -15,7 +15,12 @@ public class Main {
         System.out.println("---------------------------------------------------------------------");
         System.out.println("Comparacion: " + fech1.comparar(fech2));
 
-        System.out.println("Desplazamiento:");
-        fech1.desplazar();
+        System.out.println("Suma:");
+        try {
+			fech1.add();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }

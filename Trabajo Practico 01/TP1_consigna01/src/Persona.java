@@ -7,10 +7,6 @@ import java.util.Scanner;
  * and open the template in the editor.
  */
 
-/**
- *
- * @author Agus
- */
 public class Persona {
     private long dni;
     private String apellido;
@@ -59,6 +55,7 @@ public class Persona {
         this.apellido = entradaScanner.nextLine ();
         System.out.println("Ingrese nombre: ");
         this.nombre = entradaScanner.nextLine ();
+        entradaScanner.close();
     }
     
     public void show(){

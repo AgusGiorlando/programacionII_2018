@@ -10,10 +10,18 @@ public class Main {
         fech2.input();
         fech2.show();
         System.out.println(fech1.toString());
-
+     
         System.out.println("---------------------------------------------------------------------");
         System.out.println("Comparacion: " + fech1.comparar(fech2));
         System.out.println("---------------------------------------------------------------------");
 
+        System.out.println("---------------------------------------------------------------------");
+        System.out.println("Suma:");
+        try {
+			fech1.add();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }

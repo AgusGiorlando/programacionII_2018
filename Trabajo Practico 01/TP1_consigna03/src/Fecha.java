@@ -1,12 +1,6 @@
-import java.text.SimpleDateFormat;
 import java.util.Scanner;
-import java.util.Calendar;
-import java.util.Date;
-import java.text.ParseException;
 
-
-
-public class Fecha {
+public class Fecha implements Cloneable{
     private int dia;
     private int mes;
     private int anho;
@@ -53,6 +47,7 @@ public class Fecha {
         this.mes = Integer.parseInt(entradaScanner.nextLine());
         System.out.println("Ingrese Año:");
         this.anho = Integer.parseInt(entradaScanner.nextLine());
+        
     }
 
     public void show(){
@@ -64,48 +59,68 @@ public class Fecha {
 
     @Override
     public String toString() {
-        return dia + "/" + mes + "/" + anho;
+        return "Fecha{" +
+                "dia=" + dia +
+                ", mes=" + mes +
+                ", año=" + anho +
+                '}';
     }
 
     public int comparar(Fecha f2){
+        int resp = 0;
         if (this.anho < f2.anho){
-            return -1;
+            resp = -1;
         }else if (this.anho > f2.anho){
-            return 1;
+            resp = 1;
         }else{
             if (this.mes < f2.mes){
-                return -1;
+                resp = -1;
             }else if (this.mes > f2.mes){
-                return 1;
+                resp = 1;
             }else{
                 if (this.dia < f2.dia){
-                    return -1;
+                    resp = -1;
                 }else if (this.dia > f2.dia){
-                    return 1;
+                    resp = 1;
                 }
             }
         }
-        return 0;
+    return resp;
     }
-
-    public void desplazar(){
+    
+    public void add() throws CloneNotSupportedException {
+    	Fecha res = (Fecha) this.clone();
         Scanner entradaScanner = new Scanner (System.in);
-        System.out.println("Ingrese Dias a desplazar:");
-        int dias = Integer.parseInt(entradaScanner.nextLine());
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Calendar cal = Calendar.getInstance();
-        try {
-            Date date = formatter.parse(this.toString());
-            cal.setTime(date);
-            cal.add(Calendar.DAY_OF_YEAR, dias);
-        }catch (ParseException e){
-            e.printStackTrace();
-        }
-        int mes = cal.get(Calendar.MONTH) + 1;
-        System.out.println(cal.getTime());
-        System.out.println("Dia:" + cal.get(Calendar.DAY_OF_MONTH));
-        System.out.println("Mes:" + mes);
-        System.out.println("Año:" + cal.get(Calendar.YEAR));
+        System.out.println("Ingrese Dias a agregar a la fecha 1:");
+        int d = Integer.parseInt(entradaScanner.nextLine());
+    	for (int i = 0 ; i < d ; i++) {
+			res.dia += 1;
+			if(res.dia > diasMes(res)) {
+				res.dia = 1;
+				res.mes += 1;
+				if(res.mes > 12) {
+					res.mes = 1;
+					res.anho +=1;
+				}
+			}
+		}
+    	System.out.println("Resultado:");
+    	res.show();
     }
-
+    
+    public int diasMes(Fecha f) {
+    	int dias;
+    	if(f.mes == 4 || f.mes == 5 || f.mes == 9 || f.mes == 11) {
+    		dias = 30;
+    	}else if(f.mes == 2) {
+    		if ((f.anho % 4 == 0) && (f.anho % 100 != 0) && (f.anho % 400 == 0)) {
+    			dias = 29;
+    		}else {
+        		dias = 28;    			
+    		}
+    	}else {
+    		dias = 31;
+    	}
+    return dias;
+    }
 }

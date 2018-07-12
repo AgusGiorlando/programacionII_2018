@@ -1,5 +1,3 @@
-package ar.edu.um.programacion2_2018.TP6_Consigna01;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

@@ -39,7 +39,7 @@ public class App
 //				modificar();
 				break;
 			case 3:
-//				eliminar();
+				eliminar();
 				break;
 			case 4:
 				buscar();
@@ -81,6 +81,37 @@ public class App
 		}    	
     }
     
+    public static void modificar() {
+    	System.out.println("------------------MODIFICAR REGISTRO--------------------");
+    	System.out.println("Id: ");
+    	String id_busqueda = entradaScanner.nextLine();
+    	
+    	
+    	System.out.println("Fecha de inicio:");
+        String fecha = entradaScanner.nextLine();
+        System.out.println("Autor:");
+        String autor = entradaScanner.nextLine();
+        System.out.println("Descripcion:");
+        String descripcion = entradaScanner.nextLine();
+    	
+    	Conexion conexion = Conexion.getInstance();
+    	
+        String sql = "INSERT INTO Tarea VALUES (null,?,?,?);";
+        
+        try {
+			PreparedStatement stmt = conexion.con.prepareStatement(sql);
+			stmt.setString(1, fecha);
+			stmt.setString(2, autor);
+			stmt.setString(3, descripcion);
+			
+			stmt.execute();
+			System.out.println("REGISTRO INSERTADO");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}    	
+    }
+
+    
     public static void listar() {
     	System.out.println("------------------LISTAR REGISTROS--------------------");
     	
@@ -93,12 +124,40 @@ public class App
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while (rs.next()) {
-				Integer id = rs.getInt("id");
+				Integer idTarea = rs.getInt("idTarea");
 				String inicio = rs.getString("inicio");
 				String autor = rs.getString("autor");
 				String descripcion = rs.getString("descripcion");
 				
-				System.out.println(String.valueOf(id) + "   " + inicio + "   " + autor + "   " + descripcion);
+				System.out.println(String.valueOf(idTarea) + "   " + inicio + "   " + autor + "   " + descripcion);
+			}
+						
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        
+    }
+    
+    public static void eliminar() {
+    	System.out.println("------------------ELIMINAR REGISTRO--------------------");
+    	
+    	Conexion conexion = Conexion.getInstance();
+    	
+    	System.out.println("Id:");
+        Integer id_busqueda = entradaScanner.nextInt();
+        
+       String sql = "DELETE FROM Tarea WHERE idTarea=?";
+        
+        try {
+        	PreparedStatement stmt = conexion.con.prepareStatement(sql);
+        	stmt.setInt(1, id_busqueda);
+        	
+        	int rs = stmt.executeUpdate(sql);
+			
+			if(rs > 0) {
+				System.out.println("Registro eliminado correctamente");
+			}else {
+				System.out.println("No se pudo eliminar el registro");
 			}
 						
 		} catch (SQLException e) {
@@ -115,7 +174,7 @@ public class App
     	System.out.println("Id:");
         Integer id_busqueda = entradaScanner.nextInt();
         
-        String sql = "SELECT * FROM Tarea WHERE id=?;";
+        String sql = "SELECT * FROM Tarea WHERE idTarea = ?;";
         
         try {
         	PreparedStatement stmt = conexion.con.prepareStatement(sql);
@@ -125,12 +184,12 @@ public class App
 			
 			stmt.execute();
 		
-			Integer id = rs.getInt("id");
+			Integer idTarea = rs.getInt("idTarea");
 			String inicio = rs.getString("inicio");
 			String autor = rs.getString("autor");
 			String descripcion = rs.getString("descripcion");
 				
-			System.out.println(String.valueOf(id) + "   " + inicio + "   " + autor + "   " + descripcion);
+			System.out.println(String.valueOf(idTarea) + "   " + inicio + "   " + autor + "   " + descripcion);
 						
 		} catch (SQLException e) {
 			e.printStackTrace();

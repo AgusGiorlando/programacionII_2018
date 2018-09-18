@@ -36,7 +36,7 @@ public class App
 				agregar();
 				break;
 			case 2:
-//				modificar();
+				modificar();
 				break;
 			case 3:
 				eliminar();
@@ -63,7 +63,7 @@ public class App
         String autor = entradaScanner.nextLine();
         System.out.println("Descripcion:");
         String descripcion = entradaScanner.nextLine();
-    	
+        
     	Conexion conexion = Conexion.getInstance();
     	
         String sql = "INSERT INTO Tarea VALUES (null,?,?,?);";
@@ -79,13 +79,13 @@ public class App
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}    	
+
     }
     
     public static void modificar() {
     	System.out.println("------------------MODIFICAR REGISTRO--------------------");
     	System.out.println("Id: ");
-    	String id_busqueda = entradaScanner.nextLine();
-    	
+    	Integer id_busqueda = Integer.valueOf(entradaScanner.nextLine());
     	
     	System.out.println("Fecha de inicio:");
         String fecha = entradaScanner.nextLine();
@@ -93,19 +93,20 @@ public class App
         String autor = entradaScanner.nextLine();
         System.out.println("Descripcion:");
         String descripcion = entradaScanner.nextLine();
-    	
-    	Conexion conexion = Conexion.getInstance();
-    	
-        String sql = "INSERT INTO Tarea VALUES (null,?,?,?);";
+
+        Conexion conexion = Conexion.getInstance();
+        
+        String sql = "UPDATE Tarea SET inicio = ?,autor = ?, descripcion = ? WHERE idTarea = ?";
         
         try {
 			PreparedStatement stmt = conexion.con.prepareStatement(sql);
 			stmt.setString(1, fecha);
 			stmt.setString(2, autor);
 			stmt.setString(3, descripcion);
+			stmt.setInt(4, id_busqueda);
 			
-			stmt.execute();
-			System.out.println("REGISTRO INSERTADO");
+			stmt.executeUpdate();
+			System.out.println("REGISTRO MODIFICADO");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}    	
@@ -135,65 +136,58 @@ public class App
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-        
     }
     
     public static void eliminar() {
-    	System.out.println("------------------ELIMINAR REGISTRO--------------------");
-    	
-    	Conexion conexion = Conexion.getInstance();
-    	
+		System.out.println("------------------ELIMINAR REGISTRO--------------------");    	
     	System.out.println("Id:");
-        Integer id_busqueda = entradaScanner.nextInt();
-        
-       String sql = "DELETE FROM Tarea WHERE idTarea=?";
-        
-        try {
-        	PreparedStatement stmt = conexion.con.prepareStatement(sql);
-        	stmt.setInt(1, id_busqueda);
-        	
-        	int rs = stmt.executeUpdate(sql);
-			
-			if(rs > 0) {
-				System.out.println("Registro eliminado correctamente");
-			}else {
-				System.out.println("No se pudo eliminar el registro");
+    	Integer id_busqueda = Integer.valueOf(entradaScanner.nextLine());
+
+    	Conexion conexion = Conexion.getInstance();
+		
+		String sql = "delete from Tarea where idTarea = ?;";
+		
+		 try {
+	        	PreparedStatement stmt = conexion.con.prepareStatement(sql);
+	        	stmt.setInt(1, id_busqueda);
+	        	
+	        	int rs = stmt.executeUpdate();
+
+	        	if(rs > 0) {
+					System.out.println("Registro eliminado correctamente");
+				}else {
+					System.out.println("No se pudo eliminar el registro");
+				}						
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-						
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-        
     }
     
     public static void buscar() {
     	System.out.println("------------------BUSCAR REGISTRO--------------------");
-    	
-    	Conexion conexion = Conexion.getInstance();
-    	
     	System.out.println("Id:");
-        Integer id_busqueda = entradaScanner.nextInt();
-        
-        String sql = "SELECT * FROM Tarea WHERE idTarea = ?;";
-        
-        try {
+    	Integer id_busqueda = Integer.valueOf(entradaScanner.nextLine());
+    	
+		Conexion conexion = Conexion.getInstance();
+		
+		String sql = "SELECT * FROM Tarea WHERE idTarea = ?";
+
+		try {
         	PreparedStatement stmt = conexion.con.prepareStatement(sql);
         	stmt.setInt(1, id_busqueda);
         	
-        	ResultSet rs = stmt.executeQuery(sql);
-			
-			stmt.execute();
-		
-			Integer idTarea = rs.getInt("idTarea");
-			String inicio = rs.getString("inicio");
-			String autor = rs.getString("autor");
-			String descripcion = rs.getString("descripcion");
+        	ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				Integer idTarea = rs.getInt("idTarea");
+				String inicio = rs.getString("inicio");
+				String autor = rs.getString("autor");
+				String descripcion = rs.getString("descripcion");
 				
-			System.out.println(String.valueOf(idTarea) + "   " + inicio + "   " + autor + "   " + descripcion);
-						
+				System.out.println(String.valueOf(idTarea) + "   " + inicio + "   " + autor + "   " + descripcion);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-        
+
     }
 }

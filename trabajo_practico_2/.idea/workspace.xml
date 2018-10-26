@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="dd3c2d24-0357-4559-8127-ea1254472850" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/Cargo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/CargoMateria.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/ComunidadDocente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/ContenidoTeorico.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/Materia.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/Profesor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/ProfesorAdjunto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/ProfesorTitular.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/TrabajoPractico.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna01/.classpath" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna01/.project" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna01/build.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna01/build/classes/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna01/build/classes/Persona.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna01/manifest.mf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna01/nbproject/build-impl.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna01/nbproject/genfiles.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna01/nbproject/private/private.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna01/nbproject/private/private.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna01/nbproject/project.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna01/nbproject/project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna01/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna01/src/Persona.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna02/.classpath" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna02/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna02/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna02/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna02/.project" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna02/TP1_consigna_02.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna02/out/production/TP1_consigna_02/Fecha.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna02/out/production/TP1_consigna_02/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna02/src/Fecha.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna02/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/.classpath" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/.project" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/TP1_consigna03.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/out/production/TP1_consigna03/Fecha.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/out/production/TP1_consigna03/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/out/production/TP1_consigna03/Persona.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/out/production/TP1_consigna03/PersonaConNacimiento.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/src/Fecha.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/src/Persona.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/TP1_consigna03/src/PersonaConNacimiento.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Trabajo Practico 01/Trabajo Practico No 1.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demoweb.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.project" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.m2e.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../trabajo_practico_6/TP6_Consigna02/TP6_Consigna02/target/classes/META-INF/maven/ar.edu.um.programacionII/TP6_Consigna02/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../trabajo_practico_6/TP6_Consigna02/TP6_Consigna02/target/classes/META-INF/maven/ar.edu.um.programacionII/TP6_Consigna02/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../trabajo_practico_7/consigna01/src/main/java/ar/edu/um/programacion2/consigna01/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/../trabajo_practico_7/consigna01/src/main/java/ar/edu/um/programacion2/consigna01/app/App.java" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="1026275256">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="4" />
+          <entry key="project.open.time.10" value="1" />
+          <entry key="project.open.time.35" value="1" />
+          <entry key="project.open.time.41" value="1" />
+          <entry key="project.open.time.43" value="1" />
+          <entry key="project.opened" value="4" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="java" value="14" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="JAVA" value="14" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="java" value="89" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="89" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/ComunidadDocente.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="24" column="23" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/Cargo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/CargoMateria.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/ContenidoTeorico.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/Materia.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/Profesor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/ProfesorAdjunto.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/ProfesorTitular.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/TrabajoPractico.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/ComunidadDocente.java" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="41" />
+    <option name="y" value="25" />
+    <option name="width" value="663" />
+    <option name="height" value="743" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="TP2_Consigna02" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trabajo_practico_2" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TP2_Consigna02" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trabajo_practico_2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TP2_Consigna02" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trabajo_practico_2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TP2_Consigna02" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trabajo_practico_2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TP2_Consigna02" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trabajo_practico_2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="programacionII2018" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TP2_Consigna02" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trabajo_practico_2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TP2_Consigna02" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trabajo_practico_2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TP2_Consigna02" type="b2602c69:ProjectViewProjectNode" />
+              <item name="trabajo_practico_2" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="programacionII2018" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dd3c2d24-0357-4559-8127-ea1254472850" name="Default Changelist" comment="" />
+      <created>1538084972389</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1538084972389</updated>
+      <workItem from="1538084977293" duration="1887000" />
+      <workItem from="1538504111224" duration="42000" />
+      <workItem from="1538504335611" duration="33000" />
+      <workItem from="1538760705935" duration="113000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="2075000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="41" y="25" width="1325" height="743" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2611415" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="UI Designer" order="3" />
+      <window_info id="Learn" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32952693" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+      <window_info anchor="right" id="Maven Projects" order="6" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-46" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/ContenidoTeorico.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+          <folding>
+            <element signature="e#566#567#0" expanded="true" />
+            <element signature="e#593#594#0" expanded="true" />
+            <element signature="e#633#634#0" expanded="true" />
+            <element signature="e#665#666#0" expanded="true" />
+            <element signature="e#703#704#0" expanded="true" />
+            <element signature="e#737#738#0" expanded="true" />
+            <element signature="e#791#792#0" expanded="true" />
+            <element signature="e#837#838#0" expanded="true" />
+            <element signature="e#878#879#0" expanded="true" />
+            <element signature="e#918#919#0" expanded="true" />
+            <element signature="e#981#982#0" expanded="true" />
+            <element signature="e#1039#1040#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/Materia.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+          <folding>
+            <element signature="e#408#409#0" expanded="true" />
+            <element signature="e#444#445#0" expanded="true" />
+            <element signature="e#502#503#0" expanded="true" />
+            <element signature="e#552#553#0" expanded="true" />
+            <element signature="e#585#586#0" expanded="true" />
+            <element signature="e#614#615#0" expanded="true" />
+            <element signature="e#658#659#0" expanded="true" />
+            <element signature="e#694#695#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/Profesor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret lean-forward="true" />
+          <folding>
+            <element signature="e#649#650#0" expanded="true" />
+            <element signature="e#683#684#0" expanded="true" />
+            <element signature="e#734#735#0" expanded="true" />
+            <element signature="e#780#781#0" expanded="true" />
+            <element signature="e#813#814#0" expanded="true" />
+            <element signature="e#842#843#0" expanded="true" />
+            <element signature="e#886#887#0" expanded="true" />
+            <element signature="e#922#923#0" expanded="true" />
+            <element signature="e#957#958#0" expanded="true" />
+            <element signature="e#988#989#0" expanded="true" />
+            <element signature="e#1036#1037#0" expanded="true" />
+            <element signature="e#1076#1077#0" expanded="true" />
+            <element signature="e#1121#1122#0" expanded="true" />
+            <element signature="e#1156#1157#0" expanded="true" />
+            <element signature="e#1218#1219#0" expanded="true" />
+            <element signature="e#1266#1267#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/ProfesorTitular.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#434#435#0" expanded="true" />
+            <element signature="e#473#474#0" expanded="true" />
+            <element signature="e#547#548#0" expanded="true" />
+            <element signature="e#603#604#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/TrabajoPractico.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="23" column="39" selection-start-line="23" selection-start-column="39" selection-end-line="23" selection-end-column="39" />
+          <folding>
+            <element signature="e#546#547#0" expanded="true" />
+            <element signature="e#575#576#0" expanded="true" />
+            <element signature="e#652#653#0" expanded="true" />
+            <element signature="e#691#692#0" expanded="true" />
+            <element signature="e#726#727#0" expanded="true" />
+            <element signature="e#782#783#0" expanded="true" />
+            <element signature="e#830#831#0" expanded="true" />
+            <element signature="e#870#871#0" expanded="true" />
+            <element signature="e#909#910#0" expanded="true" />
+            <element signature="e#970#971#0" expanded="true" />
+            <element signature="e#1026#1027#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/ProfesorAdjunto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/Cargo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="38" column="1" lean-forward="true" selection-start-line="38" selection-start-column="1" selection-end-line="38" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/CargoMateria.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="1" selection-start-line="23" selection-start-column="1" selection-end-line="23" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ar/edu/um/programacionII2018/ComunidadDocente.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="24" column="23" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

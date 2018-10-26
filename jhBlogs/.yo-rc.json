@@ -1,0 +1,32 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.agus.f"
+    },
+    "jhipsterVersion": "5.3.1",
+    "applicationType": "monolith",
+    "baseName": "jhBlogs",
+    "packageName": "com.agus.f",
+    "packageFolder": "com/agus/f",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "MTk0MmViM2EyNmY5MDdmMDQ0YWQwYzA5MTBkZmZjYjgyYmM2M2EyNzVmZjk2MzFiNTMzZTAyZTMxNTc2MGY4Y2UxODU1Y2IyOWU0YjQ0MGU3OGY3YTE2YzVhYTc5YjQ3MWQyNjMwZDhmNjcxYmE3NTg5M2FhNzczNDA3YWQ1YzY=",
+    "clientFramework": "angularX",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "enableTranslation": false
+  }
+}

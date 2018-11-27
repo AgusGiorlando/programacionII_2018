@@ -1,6 +1,7 @@
 package ar.edu.um.prog2.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -30,6 +31,9 @@ public class Pago implements Serializable {
 
     @NotNull
     @Size(min = 36, max = 36)
+    //Prueba
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(name = "pago_uuid", length = 36, nullable = false)
     private String pagoUuid;
 

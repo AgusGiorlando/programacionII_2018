@@ -1,5 +1,7 @@
 package ar.edu.um.prog2.web.rest;
 
+import ar.edu.um.prog2.domain.Tarjeta;
+import ar.edu.um.prog2.repository.TarjetaRepository;
 import com.codahale.metrics.annotation.Timed;
 import ar.edu.um.prog2.domain.Pago;
 import ar.edu.um.prog2.repository.PagoRepository;
@@ -7,8 +9,11 @@ import ar.edu.um.prog2.web.rest.errors.BadRequestAlertException;
 import ar.edu.um.prog2.web.rest.util.HeaderUtil;
 import ar.edu.um.prog2.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import org.hibernate.id.UUIDGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -20,8 +25,11 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * REST controller for managing Pago.
@@ -35,6 +43,9 @@ public class PagoResource {
     private static final String ENTITY_NAME = "pago";
 
     private final PagoRepository pagoRepository;
+
+    @Autowired
+    private TarjetaRepository tarjetaRepository;
 
     public PagoResource(PagoRepository pagoRepository) {
         this.pagoRepository = pagoRepository;
@@ -54,7 +65,20 @@ public class PagoResource {
         if (pago.getId() != null) {
             throw new BadRequestAlertException("A new pago cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        Tarjeta tarjeta = pago.getTarjeta();
+
+        if (tarjeta.getSaldo().compareTo(pago.getImporte()) == -1){
+            throw new UnsupportedOperationException("Insufficient funds");
+        }
+
+        tarjeta.setSaldo(tarjeta.getSaldo().subtract(pago.getImporte()));
+        tarjeta.setUpdated(ZonedDateTime.now());
+        tarjetaRepository.save(tarjeta);
+
+        pago.setPagoUuid(UUID.randomUUID().toString());
         Pago result = pagoRepository.save(pago);
+
         return ResponseEntity.created(new URI("/api/pagos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -76,6 +100,7 @@ public class PagoResource {
         if (pago.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        pago.setUpdated(ZonedDateTime.now());
         Pago result = pagoRepository.save(pago);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, pago.getId().toString()))

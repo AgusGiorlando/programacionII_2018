@@ -1,0 +1,38 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "ar.edu.um.prog2",
+      "nativeLanguage": "es"
+    },
+    "jhipsterVersion": "5.3.1",
+    "applicationType": "monolith",
+    "baseName": "cine",
+    "packageName": "ar.edu.um.prog2",
+    "packageFolder": "ar/edu/um/prog2",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "YjliMTdlZDBkN2ViODg1N2QxYjE3ZTIxMmEyZTlhNTEzM2Q1NzJmOTVjNzExOTM0YWIyNmRlNjk3OGQzNjZmMmJjYTAzMDk4MTEyYmQ1ZWZhY2ZmMmQzN2FhNDk4MWQ4ZDJhOGQ0NTcxMDg0OTc0MjBkYjFlMmMwOGRmYTVhMDE=",
+    "clientFramework": "angularX",
+    "useSass": false,
+    "clientPackageManager": "npm",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "enableTranslation": true,
+    "nativeLanguage": "es",
+    "languages": [
+      "es",
+      "en"
+    ]
+  }
+}

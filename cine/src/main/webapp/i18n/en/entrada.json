@@ -1,0 +1,26 @@
+
+{
+    "cineApp": {
+        "entrada" : {
+            "home": {
+                "title": "Entradas",
+                "createLabel": "Create a new Entrada",
+                "createOrEditLabel": "Create or edit a Entrada"
+            },
+            "created": "A new Entrada is created with identifier {{ param }}",
+            "updated": "A Entrada is updated with identifier {{ param }}",
+            "deleted": "A Entrada is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Entrada {{ id }}?"
+            },
+            "detail": {
+                "title": "Entrada"
+            },
+            "descripcion": "Descripcion",
+            "valor": "Valor",
+            "created": "Created",
+            "updated": "Updated",
+            "ocupacion": "Ocupacion"
+        }
+    }
+}

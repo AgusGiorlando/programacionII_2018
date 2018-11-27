@@ -1,0 +1,28 @@
+
+{
+    "cineApp": {
+        "ocupacion" : {
+            "home": {
+                "title": "Ocupacions",
+                "createLabel": "Create a new Ocupacion",
+                "createOrEditLabel": "Create or edit a Ocupacion"
+            },
+            "created": "A new Ocupacion is created with identifier {{ param }}",
+            "updated": "A Ocupacion is updated with identifier {{ param }}",
+            "deleted": "A Ocupacion is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Ocupacion {{ id }}?"
+            },
+            "detail": {
+                "title": "Ocupacion"
+            },
+            "valor": "Valor",
+            "created": "Created",
+            "updated": "Updated",
+            "ticket": "Ticket",
+            "entrada": "Entrada",
+            "butaca": "Butaca",
+            "funcion": "Funcion"
+        }
+    }
+}

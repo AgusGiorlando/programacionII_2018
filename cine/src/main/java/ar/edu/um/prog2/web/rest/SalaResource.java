@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,6 +72,8 @@ public class SalaResource {
         if (sala.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
+        sala.setUpdated(ZonedDateTime.now());
         Sala result = salaRepository.save(sala);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, sala.getId().toString()))

@@ -203,4 +203,8 @@ public class Butaca implements Serializable {
             ", updated='" + getUpdated() + "'" +
             "}";
     }
+
+    public void realizarPago(){
+
+    }
 }

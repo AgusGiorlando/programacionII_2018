@@ -1,5 +1,9 @@
 package ar.edu.um.prog2.web.rest;
 
+import ar.edu.um.prog2.domain.Butaca;
+import ar.edu.um.prog2.domain.Ocupacion;
+import ar.edu.um.prog2.repository.ButacaRepository;
+import ar.edu.um.prog2.repository.OcupacionRepository;
 import com.codahale.metrics.annotation.Timed;
 import ar.edu.um.prog2.domain.Funcion;
 import ar.edu.um.prog2.repository.FuncionRepository;
@@ -8,6 +12,7 @@ import ar.edu.um.prog2.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +20,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +37,12 @@ public class FuncionResource {
     private static final String ENTITY_NAME = "funcion";
 
     private final FuncionRepository funcionRepository;
+
+    @Autowired
+    private OcupacionRepository ocupacionRepository;
+
+    @Autowired
+    private ButacaRepository butacaRepository;
 
     public FuncionResource(FuncionRepository funcionRepository) {
         this.funcionRepository = funcionRepository;
@@ -49,6 +62,8 @@ public class FuncionResource {
         if (funcion.getId() != null) {
             throw new BadRequestAlertException("A new funcion cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        funcion.setUpdated(ZonedDateTime.now());
         Funcion result = funcionRepository.save(funcion);
         return ResponseEntity.created(new URI("/api/funcions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -116,5 +131,26 @@ public class FuncionResource {
 
         funcionRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/funcions/{id}/disponibles")
+    @Timed
+    public List<Butaca> getDisponibles(@PathVariable Long id) {
+        log.debug("REST request to get Funcion : {}", id);
+
+        Optional<Funcion> funcion = funcionRepository.findById(id);
+        List<Ocupacion> ocupaciones = ocupacionRepository.findAllByFuncionAndButacaNotNull(funcion.get());
+
+        if(ocupaciones.isEmpty()){
+            return butacaRepository.findAllBySala(funcion.get().getSala());
+        }
+
+        List<Long> ocupadas = new ArrayList<>();
+
+        for (int i = 0; i < ocupaciones.size(); i++) {
+            ocupadas.add(ocupaciones.get(i).getButaca().getId());
+        }
+
+        return butacaRepository.findAllBySalaAndIdNotIn(funcion.get().getSala(), ocupadas);
     }
 }

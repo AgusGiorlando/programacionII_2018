@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,6 +72,8 @@ public class PeliculaResource {
         if (pelicula.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
+        pelicula.setUpdated(ZonedDateTime.now());
         Pelicula result = peliculaRepository.save(pelicula);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, pelicula.getId().toString()))

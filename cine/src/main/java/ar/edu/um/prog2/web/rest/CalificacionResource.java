@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,6 +72,8 @@ public class CalificacionResource {
         if (calificacion.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
+        calificacion.setUpdated(ZonedDateTime.now());
         Calificacion result = calificacionRepository.save(calificacion);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, calificacion.getId().toString()))

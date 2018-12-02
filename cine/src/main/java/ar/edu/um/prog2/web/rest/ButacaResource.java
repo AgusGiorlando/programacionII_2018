@@ -1,5 +1,7 @@
 package ar.edu.um.prog2.web.rest;
 
+import ar.edu.um.prog2.domain.Sala;
+import ar.edu.um.prog2.repository.SalaRepository;
 import com.codahale.metrics.annotation.Timed;
 import ar.edu.um.prog2.domain.Butaca;
 import ar.edu.um.prog2.repository.ButacaRepository;
@@ -8,6 +10,7 @@ import ar.edu.um.prog2.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +18,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,28 +36,32 @@ public class ButacaResource {
 
     private final ButacaRepository butacaRepository;
 
+    @Autowired
+    private SalaRepository salaRepository;
+
     public ButacaResource(ButacaRepository butacaRepository) {
         this.butacaRepository = butacaRepository;
     }
 
-    /**
-     * POST  /butacas : Create a new butaca.
-     *
-     * @param butaca the butaca to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new butaca, or with status 400 (Bad Request) if the butaca has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PostMapping("/butacas")
+    @PostMapping("/butacas/{id_sala}/{butacas}")
     @Timed
-    public ResponseEntity<Butaca> createButaca(@Valid @RequestBody Butaca butaca) throws URISyntaxException {
-        log.debug("REST request to save Butaca : {}", butaca);
-        if (butaca.getId() != null) {
-            throw new BadRequestAlertException("A new butaca cannot already have an ID", ENTITY_NAME, "idexists");
+    void createButaca(@PathVariable Long id_sala, @PathVariable int butacas) throws URISyntaxException {
+        log.debug("REST request to save Butaca : {}");
+
+        Optional<Sala> sala = salaRepository.findById(id_sala);
+        String[] filas = {"A", "B", "C", "D", "E"};
+        for (int i = 0; i < 5; i++) {
+            for (int j = 1; j <= (butacas/5); j++) {
+                Butaca butaca = new Butaca();
+                butaca.setUpdated(ZonedDateTime.now());
+                butaca.setSala(sala.get());
+                butaca.setCreated(ZonedDateTime.now());
+                butaca.setFila(filas[i]);
+                butaca.setNumero(j);
+                butaca.setDescripcion("Butaca: S: " + Long.toString(id_sala) + " F: " + filas[i] + " N: " + Integer.toString(j));
+                butacaRepository.save(butaca);
+            }
         }
-        Butaca result = butacaRepository.save(butaca);
-        return ResponseEntity.created(new URI("/api/butacas/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
     }
 
     /**
@@ -71,6 +80,8 @@ public class ButacaResource {
         if (butaca.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
+        butaca.setUpdated(ZonedDateTime.now());
         Butaca result = butacaRepository.save(butaca);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, butaca.getId().toString()))

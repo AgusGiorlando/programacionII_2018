@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +50,12 @@ public class OcupacionResource {
         if (ocupacion.getId() != null) {
             throw new BadRequestAlertException("A new ocupacion cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        //Verificar Butaca en funcion
+        //Realizar pago (verificar que se concrete)
+        //Crear ticket
+
+
         Ocupacion result = ocupacionRepository.save(ocupacion);
         return ResponseEntity.created(new URI("/api/ocupacions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -71,6 +78,8 @@ public class OcupacionResource {
         if (ocupacion.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
+        ocupacion.setUpdated(ZonedDateTime.now());
         Ocupacion result = ocupacionRepository.save(ocupacion);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, ocupacion.getId().toString()))

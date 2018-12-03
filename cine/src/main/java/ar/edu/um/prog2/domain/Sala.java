@@ -49,7 +49,7 @@ public class Sala implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Funcion> funcions = new HashSet<>();
 
-    @OneToMany(mappedBy = "sala")
+    @OneToMany(mappedBy = "sala", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Butaca> butacas = new HashSet<>();
 

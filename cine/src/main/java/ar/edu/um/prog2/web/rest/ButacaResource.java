@@ -15,11 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +43,7 @@ public class ButacaResource {
 
     @PostMapping("/butacas/{id_sala}/{butacas}")
     @Timed
-    void createButaca(@PathVariable Long id_sala, @PathVariable int butacas) throws URISyntaxException {
+    public void createButaca(@PathVariable Long id_sala, @PathVariable int butacas) throws URISyntaxException {
         log.debug("REST request to save Butaca : {}");
 
         Optional<Sala> sala = salaRepository.findById(id_sala);

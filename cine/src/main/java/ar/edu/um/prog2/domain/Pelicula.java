@@ -45,7 +45,7 @@ public class Pelicula implements Serializable {
     @Column(name = "updated", nullable = false)
     private ZonedDateTime updated;
 
-    @OneToMany(mappedBy = "pelicula")
+    @OneToMany(mappedBy = "pelicula", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Funcion> funcions = new HashSet<>();
 

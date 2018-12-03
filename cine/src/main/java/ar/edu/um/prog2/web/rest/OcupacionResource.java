@@ -1,5 +1,6 @@
 package ar.edu.um.prog2.web.rest;
 
+import ar.edu.um.prog2.domain.Butaca;
 import com.codahale.metrics.annotation.Timed;
 import ar.edu.um.prog2.domain.Ocupacion;
 import ar.edu.um.prog2.repository.OcupacionRepository;
@@ -16,6 +17,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,10 +53,14 @@ public class OcupacionResource {
             throw new BadRequestAlertException("A new ocupacion cannot already have an ID", ENTITY_NAME, "idexists");
         }
 
-        //Verificar Butaca en funcion
-        //Realizar pago (verificar que se concrete)
-        //Crear ticket
+        //Verificar Butaca disponible
+        List<Ocupacion> ocupaciones = ocupacionRepository.findAllByFuncionAndButacaNotNull(ocupacion.getFuncion());
 
+        for (int i = 0; i < ocupaciones.size(); i++) {
+            if (ocupaciones.get(i).getButaca().equals(ocupacion.getButaca())){
+                throw new BadRequestAlertException("Butaca ocupada", ENTITY_NAME, "idexists");
+            }
+        }
 
         Ocupacion result = ocupacionRepository.save(ocupacion);
         return ResponseEntity.created(new URI("/api/ocupacions/" + result.getId()))

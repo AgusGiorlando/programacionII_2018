@@ -1,5 +1,6 @@
 package ar.edu.um.prog2.web.rest;
 
+import ar.edu.um.prog2.domain.Funcion;
 import com.codahale.metrics.annotation.Timed;
 import ar.edu.um.prog2.domain.Pelicula;
 import ar.edu.um.prog2.repository.PeliculaRepository;
@@ -18,6 +19,7 @@ import java.net.URISyntaxException;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing Pelicula.
@@ -119,5 +121,14 @@ public class PeliculaResource {
 
         peliculaRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/peliculas/{id}/funciones")
+    @Timed
+    public Set<Funcion> getPeliculaFunciones(@PathVariable Long id) {
+        log.debug("REST request to get Funciones de una Pelicula : {}", id);
+        Optional<Pelicula> pelicula = peliculaRepository.findById(id);
+
+        return pelicula.get().getFuncions();
     }
 }

@@ -24,6 +24,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing Funcion.
@@ -135,8 +136,8 @@ public class FuncionResource {
 
     @GetMapping("/funcions/{id}/disponibles")
     @Timed
-    public List<Butaca> getDisponibles(@PathVariable Long id) {
-        log.debug("REST request to get Funcion : {}", id);
+    public List<Butaca> getAllButacasDisponibles(@PathVariable Long id) {
+        log.debug("REST request to get Disponibles de una funcion : {}", id);
 
         Optional<Funcion> funcion = funcionRepository.findById(id);
         List<Ocupacion> ocupaciones = ocupacionRepository.findAllByFuncionAndButacaNotNull(funcion.get());
@@ -152,5 +153,15 @@ public class FuncionResource {
         }
 
         return butacaRepository.findAllBySalaAndIdNotIn(funcion.get().getSala(), ocupadas);
+    }
+
+    @GetMapping("/funcions/{id}/butacas")
+    @Timed
+    public Set<Butaca> getAllButacas(@PathVariable Long id) {
+        log.debug("REST request to get Butacas de una funcion : {}", id);
+
+        Optional<Funcion> funcion = funcionRepository.findById(id);
+
+        return funcion.get().getSala().getButacas();
     }
 }

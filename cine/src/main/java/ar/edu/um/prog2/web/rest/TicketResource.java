@@ -174,7 +174,7 @@ public class TicketResource {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Accept", "application/json");
-        conn.setRequestProperty("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU0Mzk4OTc0MX0.Mu024I5HWAVV06Q8eUIkz8OCbi5mBUmDqV7hF0wC6lMBgdY0W6C42qm-l_rcWF0MwIQj8aPEK3aDLZNQduaxJQ");
+        conn.setRequestProperty("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU0NDA0MjE0NX0.7fEvkiODTXEcqEcx9hAaL4m4efzwLPBGntkMhOhH_TBimem1NWvN_4cdpWVYdIZ9mFtFjp78Wi10b2tybw7J3w");
 
         if (conn.getResponseCode() != 200) {
             throw new RuntimeException("Failed : HTTP Error code en cinepago : "

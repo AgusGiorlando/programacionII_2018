@@ -33,16 +33,13 @@ public class Funcion implements Serializable {
     @Column(name = "fecha", nullable = false)
     private ZonedDateTime fecha;
 
-    @NotNull
     @DecimalMin(value = "0")
     @Column(name = "valor", precision = 10, scale = 2, nullable = false)
     private BigDecimal valor;
 
-    @NotNull
     @Column(name = "created", nullable = false)
     private ZonedDateTime created;
 
-    @NotNull
     @Column(name = "updated", nullable = false)
     private ZonedDateTime updated;
 

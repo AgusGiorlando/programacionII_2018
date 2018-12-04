@@ -1,6 +1,11 @@
 package ar.edu.um.prog2.web.rest;
 
 import ar.edu.um.prog2.domain.Butaca;
+import ar.edu.um.prog2.domain.Entrada;
+import ar.edu.um.prog2.domain.Funcion;
+import ar.edu.um.prog2.repository.ButacaRepository;
+import ar.edu.um.prog2.repository.EntradaRepository;
+import ar.edu.um.prog2.repository.FuncionRepository;
 import com.codahale.metrics.annotation.Timed;
 import ar.edu.um.prog2.domain.Ocupacion;
 import ar.edu.um.prog2.repository.OcupacionRepository;
@@ -9,6 +14,7 @@ import ar.edu.um.prog2.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +40,15 @@ public class OcupacionResource {
 
     private final OcupacionRepository ocupacionRepository;
 
+    @Autowired
+    private FuncionRepository funcionRepository;
+
+    @Autowired
+    private ButacaRepository butacaRepository;
+
+    @Autowired
+    private EntradaRepository entradaRepository;
+
     public OcupacionResource(OcupacionRepository ocupacionRepository) {
         this.ocupacionRepository = ocupacionRepository;
     }
@@ -41,31 +56,64 @@ public class OcupacionResource {
     /**
      * POST  /ocupacions : Create a new ocupacion.
      *
-     * @param ocupacion the ocupacion to create
      * @return the ResponseEntity with status 201 (Created) and with body the new ocupacion, or with status 400 (Bad Request) if the ocupacion has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/ocupacions")
+    @PostMapping("/ocupacions/{idFuncion}/{idButacas}/{idEntradas}")
     @Timed
-    public ResponseEntity<Ocupacion> createOcupacion(@Valid @RequestBody Ocupacion ocupacion) throws URISyntaxException {
-        log.debug("REST request to save Ocupacion : {}", ocupacion);
-        if (ocupacion.getId() != null) {
-            throw new BadRequestAlertException("A new ocupacion cannot already have an ID", ENTITY_NAME, "idexists");
+    public List<Ocupacion> createOcupacion(@PathVariable Long idFuncion, @PathVariable String idButacas, @PathVariable String idEntradas) throws URISyntaxException {
+        log.debug("REST request to save Ocupacion : {}");
+
+        if (funcionRepository.findById(idFuncion) == null) {
+            throw new BadRequestAlertException("No existe la funcion solicitada", ENTITY_NAME, "idnull");
         }
 
-        //Verificar Butaca disponible
-        List<Ocupacion> ocupaciones = ocupacionRepository.findAllByFuncionAndButacaNotNull(ocupacion.getFuncion());
+        Optional<Funcion> funcion= funcionRepository.findById(idFuncion);
+        String[] butacas = idButacas.split("-");
+        String[] entradas = idEntradas.split("-");
+        List<Ocupacion> ocupacions= new ArrayList<>();
+
+        Iterable<Long> butacas_id = new ArrayList<>();
+        Iterable<Long> entradas_id = new ArrayList<>();
+
+        for(int i = 0;i<butacas.length;i++) {
+            ((ArrayList<Long>) butacas_id).add(Long.parseLong(butacas[i]));
+            ((ArrayList<Long>) entradas_id).add(Long.parseLong(entradas[i]));
+        }
+
+        List<Butaca> butacasList = butacaRepository.findAllById(butacas_id);
+        List<Entrada> entradasList = entradaRepository.findAllById(entradas_id);
+
+        List<Ocupacion> ocupaciones = ocupacionRepository.findAllByFuncionAndButacaNotNull(funcion.get());
+
+        List<Butaca> ocupadas = new ArrayList<>();
 
         for (int i = 0; i < ocupaciones.size(); i++) {
-            if (ocupaciones.get(i).getButaca().equals(ocupacion.getButaca())){
-                throw new BadRequestAlertException("Butaca ocupada", ENTITY_NAME, "idexists");
+            ocupadas.add(ocupaciones.get(i).getButaca());
+        }
+
+        for (int i = 0; i < butacasList.size(); i++) {
+            for (int j = 0; j < ocupadas.size(); j++) {
+                if (butacasList.get(i).equals(ocupadas.get(j))){
+                    throw new BadRequestAlertException("Una butaca solicitada esta ocupada", ENTITY_NAME, "idnull");
+                }
             }
         }
 
-        Ocupacion result = ocupacionRepository.save(ocupacion);
-        return ResponseEntity.created(new URI("/api/ocupacions/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        for(int indice = 0;indice<butacasList.size();indice++) {
+            Ocupacion ocupacion=new Ocupacion();
+            ocupacion.setButaca(butacasList.get(indice));
+            ocupacion.setFuncion(funcion.get());
+            ocupacion.setEntrada(entradasList.get(indice));
+            ocupacion.setValor(ocupacion.getEntrada().getValor());
+            ocupacion.setCreated(ZonedDateTime.now());
+            ocupacion.setUpdated(ZonedDateTime.now());
+            ocupacions.add(ocupacion);
+        }
+
+        List<Ocupacion> result_ocupacion = ocupacionRepository.saveAll(ocupacions);
+
+        return result_ocupacion;
     }
 
     /**
@@ -75,11 +123,10 @@ public class OcupacionResource {
      * @return the ResponseEntity with status 200 (OK) and with body the updated ocupacion,
      * or with status 400 (Bad Request) if the ocupacion is not valid,
      * or with status 500 (Internal Server Error) if the ocupacion couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/ocupacions")
     @Timed
-    public ResponseEntity<Ocupacion> updateOcupacion(@Valid @RequestBody Ocupacion ocupacion) throws URISyntaxException {
+    public ResponseEntity<Ocupacion> updateOcupacion(@Valid @RequestBody Ocupacion ocupacion) {
         log.debug("REST request to update Ocupacion : {}", ocupacion);
         if (ocupacion.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -132,4 +179,5 @@ public class OcupacionResource {
         ocupacionRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
 }

@@ -174,11 +174,29 @@ public class TicketResource {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Accept", "application/json");
-        conn.setRequestProperty("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU0NDA0MjE0NX0.7fEvkiODTXEcqEcx9hAaL4m4efzwLPBGntkMhOhH_TBimem1NWvN_4cdpWVYdIZ9mFtFjp78Wi10b2tybw7J3w");
+        conn.setRequestProperty("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU0Mzk4OTc0MX0.Mu024I5HWAVV06Q8eUIkz8OCbi5mBUmDqV7hF0wC6lMBgdY0W6C42qm-l_rcWF0MwIQj8aPEK3aDLZNQduaxJQ");
 
         if (conn.getResponseCode() != 200) {
-            throw new RuntimeException("Failed : HTTP Error code en cinepago : "
-                + conn.getResponseCode());
+            ocupacionRepository.deleteAll(ocupacionesList);
+
+            BufferedReader err = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            String errorkey = null;
+            for (int i = 0; i < 3; i++) {
+                if (i==2){
+                    errorkey = err.readLine();
+                }
+                err.readLine();
+            }
+            if (errorkey.contains("saldo")){
+                throw new RuntimeException("Error: Saldo insuficiente en tarjeta :"
+                    + conn.getResponseCode());
+            }else if (errorkey.contains("num_tarjeta")){
+                throw new RuntimeException("Error: Numero de tarjeta inexistente :"
+                    + conn.getResponseCode());
+            }else {
+                throw new RuntimeException("Failed : HTTP Error code en cinepago : "
+                    + conn.getResponseCode());
+            }
         }
 
         InputStreamReader in = new InputStreamReader(conn.getInputStream());
@@ -213,6 +231,5 @@ public class TicketResource {
         }
 
         return salida ;
-
     }
 }

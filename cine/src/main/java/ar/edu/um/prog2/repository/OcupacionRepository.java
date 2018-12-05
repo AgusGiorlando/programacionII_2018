@@ -15,4 +15,5 @@ import java.util.List;
 @Repository
 public interface OcupacionRepository extends JpaRepository<Ocupacion, Long> {
     List<Ocupacion> findAllByFuncionAndButacaNotNull(Funcion funcion);
+    List<Ocupacion> findAllByIdAndTicketIsNull(List<Long> ids);
 }

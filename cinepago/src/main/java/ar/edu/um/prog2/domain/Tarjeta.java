@@ -34,21 +34,17 @@ public class Tarjeta implements Serializable {
     @Column(name = "numero", length = 19, nullable = false)
     private String numero;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", nullable = false)
     private Tipo tipo;
 
-    @NotNull
     @DecimalMin(value = "0")
     @Column(name = "saldo", precision = 10, scale = 2, nullable = false)
     private BigDecimal saldo;
 
-    @NotNull
     @Column(name = "created", nullable = false)
     private ZonedDateTime created;
 
-    @NotNull
     @Column(name = "updated", nullable = false)
     private ZonedDateTime updated;
 

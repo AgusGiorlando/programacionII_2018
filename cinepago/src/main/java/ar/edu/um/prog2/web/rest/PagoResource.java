@@ -9,11 +9,9 @@ import ar.edu.um.prog2.web.rest.errors.BadRequestAlertException;
 import ar.edu.um.prog2.web.rest.util.HeaderUtil;
 import ar.edu.um.prog2.web.rest.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
-import org.hibernate.id.UUIDGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -22,10 +20,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -71,12 +69,15 @@ public class PagoResource {
         if (tarjeta.getSaldo().compareTo(pago.getImporte()) == -1){
             throw new UnsupportedOperationException("Insufficient funds");
         }
-
         tarjeta.setSaldo(tarjeta.getSaldo().subtract(pago.getImporte()));
         tarjeta.setUpdated(ZonedDateTime.now());
         tarjetaRepository.save(tarjeta);
 
         pago.setPagoUuid(UUID.randomUUID().toString());
+
+        pago.setCreated(ZonedDateTime.now());
+        pago.setUpdated(ZonedDateTime.now());
+
         Pago result = pagoRepository.save(pago);
 
         return ResponseEntity.created(new URI("/api/pagos/" + result.getId()))
@@ -149,5 +150,36 @@ public class PagoResource {
 
         pagoRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @PostMapping("/pagos/{num_tarjeta}/{importe}")
+    @Timed
+    public String createPagoTarjeta(@PathVariable String num_tarjeta,@PathVariable BigDecimal importe) throws URISyntaxException {
+        log.debug("REST request to save Pago : {}");
+
+
+        if( tarjetaRepository.findByNumero(num_tarjeta) == null ) {
+            throw new BadRequestAlertException("No existe tarjeta", ENTITY_NAME, "num_tarjeta");
+        }
+
+        Tarjeta tarjeta = tarjetaRepository.findByNumero(num_tarjeta);
+
+        if(tarjeta.getSaldo().compareTo(importe) == -1)  {
+            throw new BadRequestAlertException("Saldo Insuficiente", ENTITY_NAME, "saldo");
+        }
+
+         Pago pago=new Pago();
+         pago.setImporte(importe);
+         pago.setTarjeta(tarjeta);
+         pago.setCreated(ZonedDateTime.now());
+         pago.setUpdated(ZonedDateTime.now());
+         pago.setPagoUuid(UUID.randomUUID().toString());
+         pagoRepository.save(pago);
+
+         tarjeta.setSaldo(tarjeta.getSaldo().subtract(pago.getImporte()));
+
+         tarjetaRepository.save(tarjeta);
+
+            return pago.getPagoUuid();
     }
 }

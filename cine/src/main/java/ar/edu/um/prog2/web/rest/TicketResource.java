@@ -1,12 +1,8 @@
 package ar.edu.um.prog2.web.rest;
 
-import ar.edu.um.prog2.domain.Cliente;
-import ar.edu.um.prog2.domain.Ocupacion;
-import ar.edu.um.prog2.repository.ClienteRepository;
-import ar.edu.um.prog2.repository.OcupacionRepository;
+import ar.edu.um.prog2.domain.*;
+import ar.edu.um.prog2.repository.*;
 import com.codahale.metrics.annotation.Timed;
-import ar.edu.um.prog2.domain.Ticket;
-import ar.edu.um.prog2.repository.TicketRepository;
 import ar.edu.um.prog2.web.rest.errors.BadRequestAlertException;
 import ar.edu.um.prog2.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -16,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,6 +25,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing Ticket.
@@ -50,6 +46,15 @@ public class TicketResource {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private FuncionRepository funcionRepository;
+
+    @Autowired
+    private ButacaRepository butacaRepository;
+
+    @Autowired
+    private EntradaRepository entradaRepository;
+
     public TicketResource(TicketRepository ticketRepository) {
         this.ticketRepository = ticketRepository;
     }
@@ -57,21 +62,19 @@ public class TicketResource {
     /**
      * POST  /tickets : Create a new ticket.
      *
-     * @param ticket the ticket to create
+  //   * @param ticket the ticket to create
      * @return the ResponseEntity with status 201 (Created) and with body the new ticket, or with status 400 (Bad Request) if the ticket has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/tickets")
     @Timed
-    public ResponseEntity<Ticket> createTicket(@Valid @RequestBody Ticket ticket) throws URISyntaxException {
-        log.debug("REST request to save Ticket : {}", ticket);
-        if (ticket.getId() != null) {
-            throw new BadRequestAlertException("A new ticket cannot already have an ID", ENTITY_NAME, "idexists");
-        }
+    public ResponseEntity<Ticket> createTicket() throws URISyntaxException {
 
-
-
+        Ticket ticket = new Ticket();
+        ticket.setCreated(ZonedDateTime.now());
+        ticket.setUpdated(ZonedDateTime.now());
         Ticket result = ticketRepository.save(ticket);
+
         return ResponseEntity.created(new URI("/api/tickets/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -86,18 +89,61 @@ public class TicketResource {
      * or with status 500 (Internal Server Error) if the ticket couldn't be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PutMapping("/tickets")
+    @PutMapping("/tickets/{ticketId}/{butacaId}/{funcionId}/{entradaId}")
     @Timed
-    public ResponseEntity<Ticket> updateTicket(@Valid @RequestBody Ticket ticket) throws URISyntaxException {
-        log.debug("REST request to update Ticket : {}", ticket);
-        if (ticket.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+    public ResponseEntity<Ticket> updateTicketOcupaciones(@PathVariable Long ticketId, @PathVariable Long butacaId, @PathVariable Long funcionId, @PathVariable Long entradaId) throws URISyntaxException {
+
+        if (ticketRepository.findById(ticketId).equals(null)){
+            throw new BadRequestAlertException("No existe el ticket solicitado", ENTITY_NAME, "idnull");
+        }
+        if (funcionRepository.findById(funcionId).equals(null)) {
+            throw new BadRequestAlertException("No existe la funcion solicitada", ENTITY_NAME, "idnull");
+        }
+        if (butacaRepository.findById(funcionId).equals(null)) {
+            throw new BadRequestAlertException("No existe la butaca solicitada", ENTITY_NAME, "idnull");
+        }
+        if (entradaRepository.findById(entradaId).equals(null)) {
+            throw new BadRequestAlertException("No existe la entrada solicitada", ENTITY_NAME, "idnull");
         }
 
-        ticket.setUpdated(ZonedDateTime.now());
-        Ticket result = ticketRepository.save(ticket);
+        log.debug("REST request to update Ticket Ocupaciones : {}");
+
+        Optional<Funcion> funcion = funcionRepository.findById(funcionId);
+        Optional<Butaca> butaca = butacaRepository.findById(butacaId);
+
+        List<Ocupacion> ocupaciones = ocupacionRepository.findAllByFuncionAndButacaNotNull(funcion.get());
+
+        for (int i = 0; i < ocupaciones.size(); i++) {
+            if (butaca.equals(ocupaciones.get(i).getButaca())){
+                throw new BadRequestAlertException("Una butaca solicitada esta ocupada", ENTITY_NAME, "idnull");
+            }
+        }
+
+        Optional<Ticket> ticket = ticketRepository.findById(ticketId);
+
+        Ocupacion ocupacion = new Ocupacion();
+        ocupacion.setCreated(ZonedDateTime.now());
+        ocupacion.setEntrada(entradaRepository.findById(entradaId).get());
+        ocupacion.setValor(entradaRepository.findById(entradaId).get().getValor());
+        ocupacion.setButaca(butaca.get());
+        ocupacion.setFuncion(funcion.get());
+        ocupacion.setTicket(ticket.get());
+        ocupacion.setUpdated(ZonedDateTime.now());
+        ocupacionRepository.save(ocupacion);
+
+        ticket.get().addOcupacion(ocupacion);
+
+        if(ticket.get().getButacas() == null){
+            ticket.get().setButacas(1);
+        }else{
+            ticket.get().setButacas((ticket.get().getButacas()) + 1);
+        }
+
+        ticket.get().setUpdated(ZonedDateTime.now());
+        Ticket result = ticketRepository.save(ticket.get());
+
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, ticket.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, ticket.get().getId().toString()))
             .body(result);
     }
 
@@ -142,43 +188,36 @@ public class TicketResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
-    @PostMapping("/tickets/{id_ocupaciones}/{id_cliente}/{tarjeta}")//crear ticket consumiendo rest de validacion de la parte de pago
+    @PutMapping("/tickets/{ticketId}/{clienteId}/{tarjetaNum}")
     @Timed
-    public Ticket hacerCompra(@PathVariable String id_ocupaciones, @PathVariable Long id_cliente, @PathVariable String tarjeta)throws IOException, java.io.IOException {
-        log.debug("REST request to save Ticket : {}", id_ocupaciones);
-
-        String[] ocupaciones = id_ocupaciones.split("-");
-        List<Long> ocupacionIDs = new ArrayList<>();
-
-        for(int i = 0; i < ocupaciones.length ; i++) {
-            ((ArrayList<Long>) ocupacionIDs).add(Long.parseLong(ocupaciones[i]));
+    public Ticket updateTicketPago(@PathVariable Long ticketId, @PathVariable Long clienteId, @PathVariable String tarjetaNum) throws URISyntaxException, IOException, java.io.IOException {
+        if (ticketRepository.findById(ticketId).equals(null)){
+            throw new BadRequestAlertException("No existe el ticket solicitado", ENTITY_NAME, "idnull");
+        }
+        if (clienteRepository.findById(clienteId).equals(null)) {
+            throw new BadRequestAlertException("No existe el cliente solicitado", ENTITY_NAME, "idnull");
         }
 
-        List<Ocupacion> ocupacionesList = ocupacionRepository.findAllById(ocupacionIDs);
-        if (ocupacionesList.isEmpty()){
-            throw new BadRequestAlertException("ID de Ocupacion no valido", ENTITY_NAME, "idnull");
+        Optional<Ticket> ticket = ticketRepository.findById(ticketId);
+        Set<Ocupacion> ocupaciones = ticket.get().getOcupacions();
+        List<Ocupacion> ocupacionList = new ArrayList<>(ocupaciones);
+        Optional<Cliente> cliente = clienteRepository.findById(clienteId);
+
+        ticket.get().setImporte(BigDecimal.ZERO);
+        for (int i = 0; i < ticket.get().getButacas(); i++) {
+            ticket.get().setImporte(ocupacionList.get(i).getValor().add(ticket.get().getImporte()));
         }
 
-        for (int i = 0; i < ocupacionesList.size(); i++) {
-            if (ocupacionesList.get(i).getTicket() != null){
-                throw new BadRequestAlertException("Ocupacion ya cobrada", ENTITY_NAME, "idnull");
-            }
-        }
+        ticket.get().setCliente(cliente.get());
 
-        Ticket ticket = new Ticket();
-        ticket.setImporte(BigDecimal.ZERO);
-        for (int i = 0; i < ocupaciones.length; i++) {
-            ticket.setImporte(ocupacionesList.get(i).getValor().add(ticket.getImporte()));
-        }
-
-        URL url = new URL("http://localhost:8090/api/pagos/"+tarjeta+"/"+ ticket.getImporte().toString());//your url i.e fetch data from .
+        URL url = new URL("http://localhost:8090/api/pagos/"+tarjetaNum+"/"+ ticket.get().getImporte().toString());//your url i.e fetch data from .
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Accept", "application/json");
-        conn.setRequestProperty("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU0Mzk4OTc0MX0.Mu024I5HWAVV06Q8eUIkz8OCbi5mBUmDqV7hF0wC6lMBgdY0W6C42qm-l_rcWF0MwIQj8aPEK3aDLZNQduaxJQ");
+        conn.setRequestProperty("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU0NDEwODY4OH0.-pqOfr5g27yMmqsXAxPWy8R8SP5gp6tuzRNMLfbqsXc-SJKSqCWRYMhW2GB4F-dpu2K_gCSgP9jLDuQWX2Z5Rw");
 
         if (conn.getResponseCode() != 200) {
-            ocupacionRepository.deleteAll(ocupacionesList);
+            ocupacionRepository.deleteAll(ocupaciones);
 
             BufferedReader err = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
             String errorkey = null;
@@ -203,21 +242,14 @@ public class TicketResource {
         InputStreamReader in = new InputStreamReader(conn.getInputStream());
         BufferedReader br = new BufferedReader(in);
 
-        Optional<Cliente> cliente = clienteRepository.findById(id_cliente);
+        ticket.get().setPagoUuid(br.readLine());
+        ticket.get().setFechaTransaccion(ZonedDateTime.now());
+        ticket.get().setUpdated(ZonedDateTime.now());
 
-        ticket.setCliente(cliente.get());
-        ticket.setPagoUuid(br.readLine());
-        ticket.setFechaTransaccion(ZonedDateTime.now());
-        ticket.setCreated(ZonedDateTime.now());
-        ticket.setUpdated(ZonedDateTime.now());
-        ticket.setButacas(ocupaciones.length);
-        Ticket result = ticketRepository.save(ticket);
-
-        for(int i = 0; i < ocupaciones.length; i++) {
-            ocupacionesList.get(i).setTicket(result);
-            ocupacionRepository.save(ocupacionesList.get(i));
-        }
+        Ticket result = ticketRepository.save(ticket.get());
 
         return result;
     }
+
+
 }

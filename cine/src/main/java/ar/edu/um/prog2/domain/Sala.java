@@ -45,10 +45,12 @@ public class Sala implements Serializable {
     @Column(name = "updated", nullable = false)
     private ZonedDateTime updated;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "sala")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Funcion> funcions = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "sala", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Butaca> butacas = new HashSet<>();

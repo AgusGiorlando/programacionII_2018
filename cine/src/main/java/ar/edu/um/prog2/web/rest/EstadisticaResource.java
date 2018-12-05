@@ -1,4 +1,4 @@
-package ar.edu.um.programacion2.cine.web.rest;
+package ar.edu.um.prog2.web.rest;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
-import ar.edu.um.programacion2.cine.domain.Ticket;
-import ar.edu.um.programacion2.cine.repository.ClienteRepository;
-import ar.edu.um.programacion2.cine.repository.TicketRepository;
+import ar.edu.um.prog2.domain.Ticket;
+import ar.edu.um.prog2.repository.ClienteRepository;
+import ar.edu.um.prog2.repository.TicketRepository;
 
 /**
  * REST controller for managing Cliente.

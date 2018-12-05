@@ -213,7 +213,7 @@ public class TicketResource {
 
         ticket.get().setCliente(cliente.get());
 
-        URL url = new URL("http://localhost:8090/api/pagos/"+tarjetaNum+"/"+ ticket.get().getImporte().toString());//your url i.e fetch data from .
+        URL url = new URL("http://localhost:8090/api/pagos/" + tarjetaNum + "/" + ticket.get().getImporte().toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Accept", "application/json");

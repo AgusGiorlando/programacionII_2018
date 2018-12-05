@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.time.ZonedDateTime;
@@ -41,25 +42,21 @@ public class ButacaResource {
         this.butacaRepository = butacaRepository;
     }
 
-    @PostMapping("/butacas/{id_sala}/{butacas}")
+    @PostMapping("/butacas")
     @Timed
-    public void createButaca(@PathVariable Long id_sala, @PathVariable int butacas) throws URISyntaxException {
-        log.debug("REST request to save Butaca : {}");
-
-        Optional<Sala> sala = salaRepository.findById(id_sala);
-        String[] filas = {"A", "B", "C", "D", "E"};
-        for (int i = 0; i < 5; i++) {
-            for (int j = 1; j <= (butacas/5); j++) {
-                Butaca butaca = new Butaca();
-                butaca.setUpdated(ZonedDateTime.now());
-                butaca.setSala(sala.get());
-                butaca.setCreated(ZonedDateTime.now());
-                butaca.setFila(filas[i]);
-                butaca.setNumero(j);
-                butaca.setDescripcion("Butaca: S: " + Long.toString(id_sala) + " F: " + filas[i] + " N: " + Integer.toString(j));
-                butacaRepository.save(butaca);
-            }
+    public ResponseEntity<Butaca> createButaca(@Valid @RequestBody Butaca butaca) throws URISyntaxException {
+        log.debug("REST request to save Butaca : {}", butaca);
+        if (butaca.getId() != null) {
+            throw new BadRequestAlertException("A new butaca cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        butaca.setCreated(ZonedDateTime.now());
+        butaca.setUpdated(ZonedDateTime.now());
+        Butaca result = butacaRepository.save(butaca);
+
+        return ResponseEntity.created(new URI("/api/butacas/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
     }
 
     /**

@@ -29,34 +29,28 @@ public class Ticket implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @Column(name = "fecha_transaccion", nullable = false)
     private ZonedDateTime fechaTransaccion;
 
-    @NotNull
     @Min(value = 1)
     @Column(name = "butacas", nullable = false)
     private Integer butacas;
 
-    @NotNull
     @DecimalMin(value = "0")
     @Column(name = "importe", precision = 10, scale = 2, nullable = false)
     private BigDecimal importe;
 
-    @NotNull
     @Size(min = 36, max = 36)
     @Column(name = "pago_uuid", length = 36, nullable = false)
     private String pagoUuid;
 
-    @NotNull
     @Column(name = "created", nullable = false)
     private ZonedDateTime created;
 
-    @NotNull
     @Column(name = "updated", nullable = false)
     private ZonedDateTime updated;
 
-    @OneToMany(mappedBy = "ticket")
+    @OneToMany(mappedBy = "ticket", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Ocupacion> ocupacions = new HashSet<>();
 

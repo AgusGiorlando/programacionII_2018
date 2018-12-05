@@ -29,19 +29,13 @@ public class Pago implements Serializable {
     @Column(name = "importe", precision = 10, scale = 2, nullable = false)
     private BigDecimal importe;
 
-    @NotNull
     @Size(min = 36, max = 36)
-    //Prueba
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(name = "pago_uuid", length = 36, nullable = false)
     private String pagoUuid;
 
-    @NotNull
     @Column(name = "created", nullable = false)
     private ZonedDateTime created;
 
-    @NotNull
     @Column(name = "updated", nullable = false)
     private ZonedDateTime updated;
 

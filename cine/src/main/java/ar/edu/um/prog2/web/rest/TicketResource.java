@@ -83,7 +83,7 @@ public class TicketResource {
     /**
      * PUT  /tickets : Updates an existing ticket.
      *
-     * @param ticket the ticket to update
+
      * @return the ResponseEntity with status 200 (OK) and with body the updated ticket,
      * or with status 400 (Bad Request) if the ticket is not valid,
      * or with status 500 (Internal Server Error) if the ticket couldn't be updated
@@ -130,6 +130,9 @@ public class TicketResource {
         ocupacion.setTicket(ticket.get());
         ocupacion.setUpdated(ZonedDateTime.now());
         ocupacionRepository.save(ocupacion);
+
+        funcion.get().addOcupacion(ocupacion);
+        funcionRepository.save(funcion.get());
 
         ticket.get().addOcupacion(ocupacion);
 
@@ -218,6 +221,7 @@ public class TicketResource {
 
         if (conn.getResponseCode() != 200) {
             ocupacionRepository.deleteAll(ocupaciones);
+            ticketRepository.delete(ticket.get());
 
             BufferedReader err = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
             String errorkey = null;

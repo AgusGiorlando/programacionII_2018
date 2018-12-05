@@ -144,31 +144,32 @@ public class TicketResource {
 
     @PostMapping("/tickets/{id_ocupaciones}/{id_cliente}/{tarjeta}")//crear ticket consumiendo rest de validacion de la parte de pago
     @Timed
-    public String hacerCompra(@PathVariable String id_ocupaciones, @PathVariable Long id_cliente, @PathVariable String tarjeta)throws IOException, java.io.IOException {
+    public Ticket hacerCompra(@PathVariable String id_ocupaciones, @PathVariable Long id_cliente, @PathVariable String tarjeta)throws IOException, java.io.IOException {
         log.debug("REST request to save Ticket : {}", id_ocupaciones);
 
         String[] ocupaciones = id_ocupaciones.split("-");
+        List<Long> ocupacionIDs = new ArrayList<>();
 
-        Iterable<Long> butacas_id = new ArrayList<>();
-        List<Long> ocupacionList = new ArrayList<>();
-
-        Ticket ticket = new Ticket();
-        for(int i = 0; i < ocupaciones.length ; i++)
-        {
-            ((ArrayList<Long>) ocupacionList).add(Long.parseLong(ocupaciones[i]));
+        for(int i = 0; i < ocupaciones.length ; i++) {
+            ((ArrayList<Long>) ocupacionIDs).add(Long.parseLong(ocupaciones[i]));
         }
 
-        Integer cant_but = ocupaciones.length;
+        List<Ocupacion> ocupacionesList = ocupacionRepository.findAllById(ocupacionIDs);
+        if (ocupacionesList.isEmpty()){
+            throw new BadRequestAlertException("ID de Ocupacion no valido", ENTITY_NAME, "idnull");
+        }
 
-        List<BigDecimal> valores = new ArrayList<>();
-        List<Ocupacion> ocupacionesList = ocupacionRepository.findAllById(ocupacionList);
+        for (int i = 0; i < ocupacionesList.size(); i++) {
+            if (ocupacionesList.get(i).getTicket() != null){
+                throw new BadRequestAlertException("Ocupacion ya cobrada", ENTITY_NAME, "idnull");
+            }
+        }
 
-
+        Ticket ticket = new Ticket();
         ticket.setImporte(BigDecimal.ZERO);
         for (int i = 0; i < ocupaciones.length; i++) {
             ticket.setImporte(ocupacionesList.get(i).getValor().add(ticket.getImporte()));
         }
-
 
         URL url = new URL("http://localhost:8090/api/pagos/"+tarjeta+"/"+ ticket.getImporte().toString());//your url i.e fetch data from .
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -188,10 +189,10 @@ public class TicketResource {
                 err.readLine();
             }
             if (errorkey.contains("saldo")){
-                throw new RuntimeException("Error: Saldo insuficiente en tarjeta :"
+                throw new RuntimeException("Error: Saldo insuficiente en tarjeta : "
                     + conn.getResponseCode());
             }else if (errorkey.contains("num_tarjeta")){
-                throw new RuntimeException("Error: Numero de tarjeta inexistente :"
+                throw new RuntimeException("Error: Numero de tarjeta inexistente : "
                     + conn.getResponseCode());
             }else {
                 throw new RuntimeException("Failed : HTTP Error code en cinepago : "
@@ -202,34 +203,21 @@ public class TicketResource {
         InputStreamReader in = new InputStreamReader(conn.getInputStream());
         BufferedReader br = new BufferedReader(in);
 
-        String output = br.readLine();
+        Optional<Cliente> cliente = clienteRepository.findById(id_cliente);
 
-        Optional<Cliente> cliente_ticket = clienteRepository.findById(id_cliente);
-
-        ticket.setCliente(cliente_ticket.get());
-        ticket.setPagoUuid(output);
+        ticket.setCliente(cliente.get());
+        ticket.setPagoUuid(br.readLine());
         ticket.setFechaTransaccion(ZonedDateTime.now());
         ticket.setCreated(ZonedDateTime.now());
         ticket.setUpdated(ZonedDateTime.now());
         ticket.setButacas(ocupaciones.length);
+        Ticket result = ticketRepository.save(ticket);
 
-        String salida="";
-
-        if(output!= null) {
-            Ticket result_ticket = ticketRepository.save(ticket);
-
-            for(int i = 0; i < ocupaciones.length; i++)
-            {
-                ocupacionesList.get(i).setTicket(result_ticket);
-                ocupacionRepository.save(ocupacionesList.get(i));
-            }
-            salida = "Operacion Completa";
-        }
-        else {
-            ocupacionRepository.deleteAll(ocupacionesList);
-            salida ="Saldo Insuficiente";
+        for(int i = 0; i < ocupaciones.length; i++) {
+            ocupacionesList.get(i).setTicket(result);
+            ocupacionRepository.save(ocupacionesList.get(i));
         }
 
-        return salida ;
+        return result;
     }
 }

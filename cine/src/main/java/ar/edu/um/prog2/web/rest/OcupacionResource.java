@@ -82,8 +82,6 @@ public class OcupacionResource {
         }
 
         List<Butaca> butacasList = butacaRepository.findAllById(butacas_id);
-        List<Entrada> entradasList = entradaRepository.findAllById(entradas_id);
-
         List<Ocupacion> ocupaciones = ocupacionRepository.findAllByFuncionAndButacaNotNull(funcion.get());
 
         List<Butaca> ocupadas = new ArrayList<>();
@@ -100,11 +98,12 @@ public class OcupacionResource {
             }
         }
 
-        for(int indice = 0;indice<butacasList.size();indice++) {
+
+        for(int i = 0 ; i < butacasList.size() ; i++) {
             Ocupacion ocupacion=new Ocupacion();
-            ocupacion.setButaca(butacasList.get(indice));
+            ocupacion.setButaca(butacasList.get(i));
             ocupacion.setFuncion(funcion.get());
-            ocupacion.setEntrada(entradasList.get(indice));
+            ocupacion.setEntrada(entradaRepository.findById(((ArrayList<Long>) entradas_id).get(i)).get());
             ocupacion.setValor(ocupacion.getEntrada().getValor());
             ocupacion.setCreated(ZonedDateTime.now());
             ocupacion.setUpdated(ZonedDateTime.now());

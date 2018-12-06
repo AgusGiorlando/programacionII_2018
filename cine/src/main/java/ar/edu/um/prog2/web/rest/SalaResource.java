@@ -56,7 +56,7 @@ public class SalaResource {
         if (sala.getId() != null) {
             throw new BadRequestAlertException("A new sala cannot already have an ID", ENTITY_NAME, "idexists");
         }
-
+    
         sala.setCreated(ZonedDateTime.now());
         sala.setUpdated(ZonedDateTime.now());
         Sala result = salaRepository.save(sala);
